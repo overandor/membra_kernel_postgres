@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: membra_user
+      POSTGRES_PASSWORD: membra_pass
+      POSTGRES_DB: membra
+    ports:
+      - "5432:5432"
+    volumes:
+      - membra_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U membra_user -d membra"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - "7860:7860"
+    command: uvicorn app:app --host 0.0.0.0 --port 7860
+
+volumes:
+  membra_pgdata:
