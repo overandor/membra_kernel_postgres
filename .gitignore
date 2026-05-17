@@ -40,9 +40,13 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# py2app
+# py2app / pyinstaller
 tools/build/
-tools/dist/
+tools/dist/*.spec
+tools/dist/RAM Optimizer
+# Keep the .app and .dmg for distribution
+!tools/dist/*.app
+!tools/dist/*.dmg
 
 # Alembic
 alembic/versions/*.pyc
