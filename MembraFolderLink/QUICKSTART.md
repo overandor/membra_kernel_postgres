@@ -31,22 +31,42 @@ MembraFolderLink/
 
 ## To Use
 
-1. Start MEMBRA backend:
+### Option A: Local Backend
+
+1. Start MEMBRA backend locally:
    ```bash
    docker-compose up -d
    alembic upgrade head
    uvicorn app:app --reload
    ```
 
-2. Enable the Finder extension in System Settings
+2. Open the Membra Folder Link app
+3. Backend URL should be `http://localhost:8000` (default)
+4. Enable the Finder extension in System Settings
+5. Right-click any folder → "Create Public Link"
 
-3. Right-click any folder → "Create Public Link"
+### Option B: Hugging Face Spaces (Public)
+
+1. Deploy backend to Hugging Face Spaces (see `deploy_to_hf.sh` in repo root)
+2. Open the Membra Folder Link app
+3. Enter your Space URL (e.g., `https://your-username-membra-folder-link.hf.space`)
+4. Click "Save"
+5. Enable the Finder extension in System Settings
+6. Right-click any folder → "Create Public Link"
+
+### Option C: Render (Public)
+
+1. Deploy backend to Render (see `DEPLOYMENT.md`)
+2. Configure the app with your Render URL
+3. Enable extension and use as above
 
 ## Integration
 
-The extension calls `POST http://localhost:8000/api/share/folder` with:
+The extension calls `POST {backend_url}/api/share/folder` with:
 - folder_path
 - expiration (never/24h/7d/30d)
 - download_allowed, index_enabled, proof_manifest_enabled, qr_enabled
 
 Returns share URL, manifest URL, and file counts.
+
+**Note:** The backend URL is configurable. Change it in the Membra Folder Link app settings.
